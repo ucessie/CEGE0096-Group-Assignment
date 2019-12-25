@@ -6,28 +6,24 @@ import matplotlib
 import matplotlib.pyplot as plt
 import gdal
 
+
 class IO:
 
-    def raster_input():
-
-        #file input
-        loadfile = ('/Users/joseph/Desktop/UCL/Geospatial programming/Material/background/raster-50k_2724246.tif')
-
-        #load in rasterio
-        geodata = rasterio.open(loadfile)
-
+    def raster_input(self):
+        # load in rasterio
+        geodata = rasterio.open(self)
 
         return geodata
 
     def plot(raster):
 
-
         show(raster, cmap='terrain')
-
-
 
     def user_input():
 
+        return 440000, 85000
+
+        '''
         x_min = 430000
         x_max = 465000
         y_min = 80000
@@ -38,7 +34,7 @@ class IO:
                 x = float(input("x coordinate: "))
                 y = float(input("y coordinate: "))
                 if x_min <= x <= x_max and y_min <= y <= y_max:
-                    return x,y
+                    return x, y
                 else:
                     print("Out of Range!")
                     return user_input()
@@ -46,12 +42,15 @@ class IO:
             except ValueError:
                 print("Wrong data tpye!")
                 return user_input()
+        '''
+    def read_elevation(self):
 
 
-
-    def read_elevation():
-
-        elevation = ('/Users/joseph/Desktop/UCL/Geospatial programming/Material/elevation/SZ.asc')
-        data = rasterio.open(elevation)
+        data = rasterio.open(self)
 
         return data
+
+    def read_user_region(self):
+
+        image = rasterio.open(self)
+        return image
