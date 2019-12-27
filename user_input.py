@@ -54,3 +54,8 @@ class IO:
 
         image = rasterio.open(self)
         return image
+
+    def np_load_data(self):
+
+        elevation = np.loadtxt(self)
+        return elevation
