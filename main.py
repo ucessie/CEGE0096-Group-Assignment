@@ -5,7 +5,7 @@ print("Enter the user location (as Easting and Northing)")
 # indicate the initial file path
 back_ground_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\background\raster-50k_2724246.tif'
 elevation_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\elevation\SZ.asc'
-user_region_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\elevation\output.asc'
+user_region_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\elevation\output.tif'
 
 # Input user point
 x, y = IO.user_input()
@@ -31,6 +31,7 @@ print(poly_area)
 #Create mask region using the buffer
 image, trans = clip.mask_ras(elevation, region)
 
+print(type(image))
 print("++++++++++++++++++++++++++++++++++++++++")
 # retrieve metadata and update the new buffer region
 user_meta = clip.meta_update(elevation,image,region, trans)
@@ -38,8 +39,10 @@ user_meta = clip.meta_update(elevation,image,region, trans)
 # execute clip method and return ascii file
 clip.clip_ras(image, user_meta)
 
+
 # update the numpy array
-hp_region = clip.load_asc(user_region_file)
+hp_region = clip.search_highest_point(user_region_file)
+print(hp_region)
 
 
 #user_region = IO.read_user_region(user_region_file)

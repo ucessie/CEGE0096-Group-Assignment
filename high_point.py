@@ -1,12 +1,11 @@
+import rasterio
 from shapely.geometry import box
 from shapely.geometry import Point
 import geopandas as gpd
 from rasterio import mask
 import numpy as np
 import json
-import rasterio
 from pyproj import CRS
-
 
 class clip:
 
@@ -47,24 +46,26 @@ class clip:
         return meta_data
 
     def clip_ras(image, meta_data):
-        output = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\elevation\output.asc'
-        with rasterio.open(output, "w", **meta_data) as dest:
-            dest.write(image)
-
-    def load_asc(self):
-        # convert to unicode
-
-        file = open(self, 'r', encoding='utf-8')
-        region = np.fromfile(file)
-
-        # line1 = linecache.getline(r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\elevation\SZ.asc', 1)
-
-        header = "ncols     %s\n" % self.shape[1]
-        header += "nrows    %s\n" % self.shape[0]
+        output = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\elevation\output.tif'
+        header = "ncols     %s\n" % image.shape[1]
+        header += "nrows    %s\n" % image.shape[2]
         header += "xllcorner 425000.0\n"
         header += "yllcorner 75000.0\n"
         header += "cellsize 5.0\n"
-        with open(self, 'w', encoding='utf-8') as f:
-            f.write(header)
-            np.savetxt(self, region, header=header, fmt="%1.2f")
-        return region
+
+        with rasterio.open(output,'w',**meta_data) as dest:
+            dest.write(image)
+
+    def search_highest_point(image):
+
+        raster = rasterio.open(image,'r')
+        height_array = raster.read()
+        max = None
+        for line in height_array:
+            max = line.max()
+
+        rc = np.transpose(np.nonzero(height_array == max))
+
+        set = [raster.xy(row, col) for item,row, col in rc]
+        return set[1]
+
