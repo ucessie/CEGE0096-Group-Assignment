@@ -4,7 +4,9 @@ from pyproj import Transformer
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
-import gdal
+from rasterio import crs
+from rasterio import warp
+import geopandas as gpd
 
 
 class IO:
@@ -15,12 +17,17 @@ class IO:
 
         return geodata
 
-    def plot(raster):
+    def plotter(buffer_region, background, user_x, user_y, high_point):
+        # Plot on a map
+        plt.scatter(high_point[0], high_point[1], c='r')
+        plt.scatter(user_x, user_y, c='b')
+        #plt.imshow(background.read(1))
+        plt.imshow(buffer_region, cmap='terrain')
+        plt.show()
 
-        show(raster, cmap='terrain')
+        # show(raster, cmap='terrain')
 
     def user_input():
-
         return 440000, 85000
 
         '''
@@ -43,19 +50,21 @@ class IO:
                 print("Wrong data tpye!")
                 return user_input()
         '''
+
     def read_elevation(self):
-
-
         data = rasterio.open(self)
 
         return data
 
     def read_user_region(self):
-
         image = rasterio.open(self)
         return image
 
     def np_load_data(self):
-
         elevation = np.loadtxt(self)
         return elevation
+
+    def load_background(self):
+        background = rasterio.open(self)
+        #background, affine = warp.reproject(background, background, dst_crs = crs.CRS.from_epsg(27700) )
+        return background

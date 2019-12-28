@@ -19,7 +19,7 @@ class clip:
 
         return region
 
-    def geo(buffer, elevation):
+    def geo(buffer):
         # save buffer region in geopandas
         geo = gpd.GeoDataFrame({'geometry': buffer}, index=[0])
         geo.crs = {'init': 'epsg:27700'}
