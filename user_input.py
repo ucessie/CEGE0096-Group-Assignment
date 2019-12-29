@@ -1,13 +1,27 @@
 import rasterio
-from rasterio.plot import show
+
 from pyproj import Transformer
 import numpy as np
-import matplotlib
-import matplotlib.pyplot as plt
+
 from rasterio import crs
 from rasterio import warp
 import geopandas as gpd
 
+
+class Point:
+    def __init__(self,id, x, y):
+        self.id = id
+        self.x = x
+        self.y = y
+
+    def get_name(self):
+        return self.id
+
+    def get_x(self):
+        return self.x
+
+    def get_y(self):
+        return self.y
 
 class IO:
 
@@ -16,16 +30,6 @@ class IO:
         geodata = rasterio.open(self)
 
         return geodata
-
-    def plotter(buffer_region, background, user_x, user_y, high_point):
-        # Plot on a map
-        plt.scatter(high_point[0], high_point[1], c='r')
-        plt.scatter(user_x, user_y, c='b')
-        #plt.imshow(background.read(1))
-        plt.imshow(buffer_region, cmap='terrain')
-        plt.show()
-
-        # show(raster, cmap='terrain')
 
     def user_input():
         return 440000, 85000

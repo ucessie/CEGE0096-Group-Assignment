@@ -1,6 +1,8 @@
 from user_input import IO
 from high_point import clip
 from ITN import ITN
+from plotter import Plotter
+
 
 print("Enter the user location (as Easting and Northing)")
 # indicate the initial file path
@@ -53,10 +55,14 @@ hp_region = clip.search_highest_point(user_region_file)
 road = ITN.read_json(itn_file)
 node = ITN.read_shape(nodes_file)
 links = ITN.read_shape(links_file)
-for key in road.keys():
-    print(key,road[key])
-    print('\n')
 
+start_node, end_node, start_x, start_y, end_x, end_y = ITN.load_tree(road,x,y,hp_region)
+print('start point: ', (start_x, start_y))
+print('user point: ', (x, y))
+print('end point: ', (end_x, end_y))
+print('highest_point: ', hp_region)
+print(start_node)
+print(end_node)
 
 # Plot Diagram
-#plot_all = IO.plotter(image,background,x,y,hp_region)
+plot_all = Plotter.plotter(image,background,x,y,hp_region,start_x,start_y,end_x,end_y)

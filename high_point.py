@@ -7,6 +7,7 @@ import numpy as np
 import json
 from pyproj import CRS
 
+
 class clip:
 
     def buffer(x, y):
@@ -53,12 +54,11 @@ class clip:
         header += "yllcorner 75000.0\n"
         header += "cellsize 5.0\n"
 
-        with rasterio.open(output,'w',**meta_data) as dest:
+        with rasterio.open(output, 'w', **meta_data) as dest:
             dest.write(image)
 
     def search_highest_point(image):
-
-        raster = rasterio.open(image,'r')
+        raster = rasterio.open(image, 'r')
         height_array = raster.read()
         max = None
         for line in height_array:
@@ -66,6 +66,5 @@ class clip:
 
         rc = np.transpose(np.nonzero(height_array == max))
 
-        set = [raster.xy(row, col) for item,row, col in rc]
+        set = [raster.xy(row, col) for item, row, col in rc]
         return set[1]
-
