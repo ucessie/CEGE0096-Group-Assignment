@@ -32,7 +32,7 @@ class IO:
         return geodata
 
     def user_input():
-        return 440000, 85000
+        return 450000, 90000
 
         '''
         x_min = 430000
@@ -57,7 +57,6 @@ class IO:
 
     def read_elevation(self):
         data = rasterio.open(self)
-
         return data
 
     def read_user_region(self):

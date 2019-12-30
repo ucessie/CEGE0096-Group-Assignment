@@ -5,8 +5,6 @@ import networkx as nx
 from user_input import Point
 
 
-
-
 class ITN:
 
     def read_shape(self):
@@ -62,5 +60,4 @@ class ITN:
         start_node = ids[start_index]
         end_node = ids[end_index]
 
-        return start_node, end_node, start_corr.get_x(),start_corr.get_y(), end_corr.get_x(), end_corr.get_y()
-
+        return G, start_node, end_node, start_corr.get_x(), start_corr.get_y(), end_corr.get_x(), end_corr.get_y()

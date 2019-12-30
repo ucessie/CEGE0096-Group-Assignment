@@ -1,5 +1,4 @@
 import rasterio
-from shapely.geometry import box
 from shapely.geometry import Point
 import geopandas as gpd
 from rasterio import mask
@@ -8,7 +7,7 @@ import json
 from pyproj import CRS
 
 
-class clip:
+class Clip:
 
     def buffer(x, y):
         # Store as point object
@@ -60,11 +59,14 @@ class clip:
     def search_highest_point(image):
         raster = rasterio.open(image, 'r')
         height_array = raster.read()
+        # find maximum value and return all
         max = None
         for line in height_array:
             max = line.max()
 
+        # return a np array of row and column
         rc = np.transpose(np.nonzero(height_array == max))
 
+        # return a list of highest point coord, but we only take the first one
         set = [raster.xy(row, col) for item, row, col in rc]
-        return set[1]
+        return set[0]
