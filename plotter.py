@@ -18,7 +18,7 @@ class Plotter:
         plt.scatter(ex, ey, c='g')
         #show(buffer_region, bounds= True, cmap='terrain')
         # img = mpimg.imread(buffer_region)
-        # plt.imshow(img, cmap='terrain')
+        # plt.imshow(img, cmap='terrain',alpha=0.5, z)
         # plt.legend()
         # plt.imshow(background, extent=[left, right, bottom, top])
         plt.show()

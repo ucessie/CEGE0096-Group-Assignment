@@ -15,8 +15,12 @@ class Clip:
         user_point = Point(x, y)
         # buffer a 5 km region
         region = user_point.buffer(5000)
-
         return region
+
+    def square_buffer(self):
+        geo = gpd.GeoDataFrame({'geometry': self}, index=[0])
+        square = geo.envelope
+        return square
 
     def geo(buffer):
         # save buffer region in geopandas
@@ -46,14 +50,13 @@ class Clip:
 
     def clip_ras(image, meta_data):
         output = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\elevation\output.tif'
-        header = "ncols     %s\n" % image.shape[1]
-        header += "nrows    %s\n" % image.shape[2]
-        header += "xllcorner 425000.0\n"
-        header += "yllcorner 75000.0\n"
-        header += "cellsize 5.0\n"
-
         with rasterio.open(output, 'w', **meta_data) as dest:
             dest.write(image)
+
+    def clip_square(self, meta_data):
+        output = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\background\bk_output.tif'
+        with rasterio.open(output, 'w', **meta_data) as dest:
+            dest.write(self)
 
     def search_highest_point(image):
         raster = rasterio.open(image, 'r')

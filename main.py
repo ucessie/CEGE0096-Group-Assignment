@@ -3,10 +3,12 @@ from high_point import Clip
 from ITN import ITN
 from plotter import Plotter
 from Shortest_path import Network
+import matplotlib.pyplot as plt
 
 print("Enter the user location (as Easting and Northing)")
 # indicate the initial file path
 back_ground_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\background\raster-50k_2724246.tif'
+background_region_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\background\bk_output.tif'
 elevation_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\elevation\SZ.asc'
 user_region_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\elevation\output.tif'
 itn_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\itn\solent_itn.json'
@@ -22,37 +24,42 @@ raster = IO.read_raster(back_ground_file)
 elevation = IO.read_raster(elevation_file)
 background = IO.read_raster(back_ground_file)
 buffer_region = IO.read_raster(user_region_file)
-all_height = elevation.read()
+background_region = IO.read_raster(background_region_file)
+all_height = elevation.read(1)
+print(all_height.shape)
 print('------------------------------------------------------------\n')
 print('Task 2 start here !!!!')
 # Takes buffer region
 user_region = Clip.buffer(x, y)
-# Transform the buffer buffer region
+bk = Clip.square_buffer(user_region)
+# Transform the buffer region
 region = Clip.geo(user_region)
+bk_region = Clip.geo(bk)
 
 # access coordinate
 coord = Clip.getFeatures(region)
-
+bk_coord = Clip.getFeatures(bk_region)
 # Check to see whether the area is correct
-poly_area = region['geometry'].area
+poly_area = bk_region['geometry'].area
 print(poly_area)
 
 # Create mask region using the buffer
 # image is a numpy array
 image, trans = Clip.mask_ras(elevation, region)
+bk_image, bk_trans = Clip.mask_ras(background, bk_region)
 
 # retrieve metadata and update the new buffer region
 user_meta = Clip.meta_update(elevation, image, region, trans)
+bk_meta = Clip.meta_update(background, bk_image, bk_region, bk_trans)
 
 # execute clip method and return tif file
 Clip.clip_ras(image, user_meta)
+Clip.clip_square(bk_image, bk_meta)
 
 # return highest point as tuple
 hp_region = Clip.search_highest_point(user_region_file)
 
 # access variables from buffer region file
-
-
 print('----------------------------------------------------------\n')
 print('Task 3 start here!!')
 # read shape
@@ -75,6 +82,7 @@ shortest_distance_path = Network.find_distance_shortest_path(road, start_node, e
 print('Shortest path (by distance weight): ', shortest_distance_path)
 
 shortest_nais_path = Network.find_nais_rule_path(road, elevation, all_height, start_node, end_node)
+print('Shortest path (by speed/time): ', shortest_nais_path)
 
 # Plot Diagram
 # plot_all = Plotter.plotter(user_region_file,background,x,y,hp_region,start_x,start_y,end_x,end_y)
