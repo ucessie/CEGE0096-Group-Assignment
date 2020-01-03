@@ -3,9 +3,15 @@ import geopandas as gpd
 import json
 import networkx as nx
 from user_input import Point
+import rasterio
 
 
 class ITN:
+
+    def read_elevaton(self):
+        raster = rasterio.open(self, 'r')
+        height_array = raster.read()
+        return height_array
 
     def read_shape(self):
 
@@ -20,15 +26,6 @@ class ITN:
 
     def load_tree(self, user_x, user_y, highest_point):
         # GeoDataFrame of the shortest path
-        # self=load json file in here
-        G = nx.Graph()
-        roadlinks = self['roadlinks']
-        for link in roadlinks:
-            G.add_edge(roadlinks[link]['start'],
-                       roadlinks[link]['end'],
-                       fid=link,
-                       weight=roadlinks[link]['length'])
-
         # index for roadnodes with Rtree
         roadnodes = self['roadnodes']
 
@@ -60,4 +57,4 @@ class ITN:
         start_node = ids[start_index]
         end_node = ids[end_index]
 
-        return G, start_node, end_node, start_corr.get_x(), start_corr.get_y(), end_corr.get_x(), end_corr.get_y()
+        return start_node, end_node, start_corr.get_x(), start_corr.get_y(), end_corr.get_x(), end_corr.get_y()

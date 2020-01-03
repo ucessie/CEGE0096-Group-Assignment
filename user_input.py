@@ -25,11 +25,6 @@ class Point:
 
 class IO:
 
-    def raster_input(self):
-        # load in rasterio
-        geodata = rasterio.open(self)
-
-        return geodata
 
     def user_input():
         return 450000, 90000
@@ -55,19 +50,11 @@ class IO:
                 return user_input()
         '''
 
-    def read_elevation(self):
+    def read_raster(self):
         data = rasterio.open(self)
         return data
 
-    def read_user_region(self):
-        image = rasterio.open(self)
-        return image
 
     def np_load_data(self):
         elevation = np.loadtxt(self)
         return elevation
-
-    def load_background(self):
-        background = rasterio.open(self)
-        #background, affine = warp.reproject(background, background, dst_crs = crs.CRS.from_epsg(27700) )
-        return background

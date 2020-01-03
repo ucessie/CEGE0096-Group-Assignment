@@ -13,7 +13,6 @@ class Clip:
         # Store as point object
         # in km
         user_point = Point(x, y)
-
         # buffer a 5 km region
         region = user_point.buffer(5000)
 
