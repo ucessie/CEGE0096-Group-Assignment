@@ -24,11 +24,11 @@ class Network:
         # identify shortest path based on Naismith’s rule
         # 5km/hr and that an additional minute is added for every 10 meters of climb
         # speed = 5000/60 #meter/min
+        #st_row, st_col = elevation.index(start_p.x, start_p.y)
+        #en_row, en_col = elevation.index(end_p.x, end_p.y)
+        #diff_elevation = height[en_row, en_col] - height[st_row, st_col]
         roadlinks = self['roadlinks']
         for link in roadlinks:
             start_p = Point(tuple(roadlinks[link]['coords'][0]))  # start of the road
             end_p = Point(tuple(roadlinks[link]['coords'][-1]))  # last element
-            st_row, st_col = elevation.index(start_p.x, start_p.y)
-            en_row, en_col = elevation.index(end_p.x, end_p.y)
-            diff_elevation = height[en_row, en_col] - height[st_row, st_col]
-            print(start_p, end_p, diff_elevation, '\n')
+            print(start_p, end_p, '\n')
