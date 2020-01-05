@@ -25,6 +25,10 @@ background = IO.read_raster(back_ground_file)
 buffer_region = IO.read_raster(user_region_file)
 background_region = IO.read_raster(background_region_file)
 all_height = elevation.read(1)
+# read shape
+road = ITN.read_json(itn_file)
+node = ITN.read_shape(nodes_file)
+links = ITN.read_shape(links_file)
 
 print('------------------------------------------------------------\n')
 print('Task 2 start here !!!!')
@@ -57,38 +61,38 @@ Clip.clip_square(bk_image, bk_meta)
 
 # return highest point as tuple
 hp_region = Clip.search_highest_point(user_region_file)
+if hp_region == (x, y):
+    print('You are very safe!!')
+    test = Plotter.simple_point(hp_region, background_region_file, user_region_file)
+else:
 
-# access variables from buffer region file
-print('----------------------------------------------------------\n')
-print('Task 3 start here!!')
-# read shape
-road = ITN.read_json(itn_file)
-node = ITN.read_shape(nodes_file)
-links = ITN.read_shape(links_file)
+    # access variables from buffer region file
+    print('----------------------------------------------------------\n')
+    print('Task 3 start here!!')
 
-start_node, end_node, start_x, start_y, end_x, end_y = ITN.load_tree(road, x, y, hp_region)
-print('start point: ', (start_x, start_y))
-print('user point: ', (x, y))
-print('end point: ', (end_x, end_y))
-print('highest_point: ', hp_region)
-print(start_node)
-print(end_node)
+    start_node, end_node, start_x, start_y, end_x, end_y = ITN.load_tree(road, x, y, hp_region)
+    print('start point: ', (start_x, start_y))
+    print('user point: ', (x, y))
+    print('end point: ', (end_x, end_y))
+    print('highest_point: ', hp_region)
+    print(start_node)
+    print(end_node)
 
-print('-------------------------------------------------------------\n')
-print('Task 4 stat here!!!')
-# Find shortest path
-shortest_distance_path, G = Network.find_distance_shortest_path(road, start_node, end_node)
-print('Shortest path (by distance weight): ', shortest_distance_path)
+    print('-------------------------------------------------------------\n')
+    print('Task 4 stat here!!!')
+    # Find shortest path
+    shortest_distance_path, G = Network.find_distance_shortest_path(road, start_node, end_node)
+    print('Shortest path (by distance weight): ', shortest_distance_path)
 
-shortest_nais_path, G2 = Network.find_nais_rule_path(road, elevation, all_height, start_node, end_node)
-print('Shortest path (by speed/time): ', shortest_nais_path)
+    shortest_nais_path, G2 = Network.find_nais_rule_path(road, elevation, all_height, start_node, end_node)
+    print('Shortest path (by speed/time): ', shortest_nais_path)
 
-print('-------------------------------------------------------------\n')
-print('Task 5 stat here!!!')
+    print('-------------------------------------------------------------\n')
+    print('Task 5 stat here!!!')
 
 
-# Plot Diagram
-plot_simple = Plotter.draw_graph(G, shortest_distance_path, road)
-plot_nais = Plotter.draw_graph(G2,shortest_nais_path, road)
-test = Plotter.test(background_region_file, user_region_file, plot_simple, plot_nais,start_x, start_y, end_x, end_y, x, y, hp_region)
+    # Plot Diagram
+    plot_simple = Plotter.draw_graph(G, shortest_distance_path, road)
+    plot_nais = Plotter.draw_graph(G2,shortest_nais_path, road)
+    test = Plotter.test(background_region_file, user_region_file, plot_simple, plot_nais,start_x, start_y, end_x, end_y, x, y, hp_region)
 
