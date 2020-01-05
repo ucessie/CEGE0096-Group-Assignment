@@ -20,7 +20,7 @@ class IO:
 
 
     def user_input():
-        return 460000, 93000
+        return 430000, 83000
 
         '''
         x_min = 430000

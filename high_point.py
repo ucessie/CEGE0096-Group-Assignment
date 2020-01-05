@@ -34,7 +34,7 @@ class Clip:
         return [json.loads(gdf.to_json())['features'][0]['geometry']]
 
     def mask_ras(raster, buffer):
-        out_img, out_transform = mask.mask(raster, shapes=buffer['geometry'], crop=True)
+        out_img, out_transform = mask.mask(raster, shapes=buffer['geometry'], crop=True, nodata=-1)
         return out_img, out_transform
 
     def meta_update(self, buffer_image, buffer_region, affine):
