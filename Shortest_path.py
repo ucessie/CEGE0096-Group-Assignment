@@ -18,7 +18,7 @@ class Network:
 
         path = nx.dijkstra_path(G, start_node, end_node, weight='weight')
 
-        return path
+        return path, G
 
     def find_nais_rule_path(self, elevation, height, start_node, end_node):
         # identify shortest path based on Naismith’s rule
@@ -49,6 +49,7 @@ class Network:
                         fid=link,
                         weight=time)
 
-
         nais_path = nx.dijkstra_path(G2, source=start_node, target=end_node, weight="weight")
-        return nais_path
+
+
+        return nais_path, G2

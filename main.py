@@ -3,7 +3,7 @@ from high_point import Clip
 from ITN import ITN
 from plotter import Plotter
 from Shortest_path import Network
-import matplotlib.pyplot as plt
+
 
 print("Enter the user location (as Easting and Northing)")
 # indicate the initial file path
@@ -24,9 +24,8 @@ raster = IO.read_raster(back_ground_file)
 elevation = IO.read_raster(elevation_file)
 background = IO.read_raster(back_ground_file)
 buffer_region = IO.read_raster(user_region_file)
-background_region = IO.read_raster(background_region_file)
 all_height = elevation.read(1)
-print(all_height.shape)
+
 print('------------------------------------------------------------\n')
 print('Task 2 start here !!!!')
 # Takes buffer region
@@ -78,13 +77,18 @@ print(end_node)
 print('-------------------------------------------------------------\n')
 print('Task 4 stat here!!!')
 # Find shortest path
-shortest_distance_path = Network.find_distance_shortest_path(road, start_node, end_node)
+shortest_distance_path, G = Network.find_distance_shortest_path(road, start_node, end_node)
 print('Shortest path (by distance weight): ', shortest_distance_path)
 
-shortest_nais_path = Network.find_nais_rule_path(road, elevation, all_height, start_node, end_node)
+shortest_nais_path, G2 = Network.find_nais_rule_path(road, elevation, all_height, start_node, end_node)
 print('Shortest path (by speed/time): ', shortest_nais_path)
+
+print('-------------------------------------------------------------\n')
+print('Task 5 stat here!!!')
+
 
 # Plot Diagram
 # plot_all = Plotter.plotter(user_region_file,background,x,y,hp_region,start_x,start_y,end_x,end_y)
-# plot_graph = Plotter.draw_graph(network, shortest_path)
+plot_graph = Plotter.draw_graph(G2,shortest_nais_path, road)
+test = Plotter.test(background_region_file, plot_graph)
 
