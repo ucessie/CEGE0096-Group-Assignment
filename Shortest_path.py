@@ -1,7 +1,6 @@
 import networkx as nx
 from shapely.geometry import Point
 
-
 class Network:
 
     def find_distance_shortest_path(self, start_node, end_node):

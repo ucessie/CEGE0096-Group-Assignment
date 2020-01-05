@@ -4,7 +4,6 @@ from ITN import ITN
 from plotter import Plotter
 from Shortest_path import Network
 
-
 print("Enter the user location (as Easting and Northing)")
 # indicate the initial file path
 back_ground_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\background\raster-50k_2724246.tif'
@@ -24,6 +23,7 @@ raster = IO.read_raster(back_ground_file)
 elevation = IO.read_raster(elevation_file)
 background = IO.read_raster(back_ground_file)
 buffer_region = IO.read_raster(user_region_file)
+background_region = IO.read_raster(background_region_file)
 all_height = elevation.read(1)
 
 print('------------------------------------------------------------\n')
@@ -88,7 +88,7 @@ print('Task 5 stat here!!!')
 
 
 # Plot Diagram
-# plot_all = Plotter.plotter(user_region_file,background,x,y,hp_region,start_x,start_y,end_x,end_y)
-plot_graph = Plotter.draw_graph(G2,shortest_nais_path, road)
-test = Plotter.test(background_region_file, plot_graph)
+plot_simple = Plotter.draw_graph(G, shortest_distance_path, road)
+plot_nais = Plotter.draw_graph(G2,shortest_nais_path, road)
+test = Plotter.test(background_region_file, user_region_file, plot_simple, plot_nais,start_x, start_y, end_x, end_y)
 

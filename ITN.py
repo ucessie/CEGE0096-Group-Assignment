@@ -1,7 +1,6 @@
 from rtree import index
 import geopandas as gpd
 import json
-import networkx as nx
 from user_input import Point
 import rasterio
 

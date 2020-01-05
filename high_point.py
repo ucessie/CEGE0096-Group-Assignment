@@ -6,7 +6,6 @@ import numpy as np
 import json
 from pyproj import CRS
 
-
 class Clip:
 
     def buffer(x, y):

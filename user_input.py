@@ -1,6 +1,5 @@
-import numpy as np
 import rasterio
-
+import numpy as np
 
 class Point:
     def __init__(self,id, x, y):
@@ -21,7 +20,7 @@ class IO:
 
 
     def user_input():
-        return 450000, 90000
+        return 460000, 93000
 
         '''
         x_min = 430000
