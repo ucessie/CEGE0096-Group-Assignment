@@ -35,6 +35,7 @@ class IO:
                 x = float(input("x coordinate(between 430000 and 465000): "))
                 y = float(input("y coordinate(between 80000, 95000): "))
                 if x_min <= x <= x_max and y_min <= y <= y_max:
+                    # Check if user is on the island
                     island = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\shape\isle_of_wight.shp'
                     shp = fiona.open(island)
                     point = shapely.geometry.Point(x, y)
@@ -46,10 +47,10 @@ class IO:
                     if not any(result):
                         print('you are in the sea')
                     else:
-                        return x,y
+                        return x, y
                 else:
                     print("Out of Range!")
-                    return user_input()
+                    return IO.user_input()
 
             except ValueError:
                 print("Wrong data tpye!")

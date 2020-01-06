@@ -78,55 +78,9 @@ class Plotter:
         ax.imshow(user_image, origin="upper", extent=u_extent, alpha=0.6, zorder=1, vmin=0)
         plt.title('Flood Emergency Planning Map', fontsize=8)
         plt.axis('off')
-        plt.legend(loc='best', fontsize=4, bbox_to_anchor=(0.5, 0, 0.5, 0.5))
+        plt.legend(loc='best', fontsize=4, bbox_to_anchor=(0.7, 0, 0.5, 0.5))
         plt.show()
 
-    def simple_point(self, background_file, user_file):
-        background = rasterio.open(str(background_file))
-        background_image = background.read(1)
-        user = rasterio.open(str(user_file))
-        user_image = user.read(1)
-        user_image[user_image == -1] = np.nan
-        bounds = background.bounds
-        extent = [bounds.left, bounds.right, bounds.bottom, bounds.top]
-        u_bound = user.bounds
-        u_extent = [u_bound.left, u_bound.right, u_bound.bottom, u_bound.top]
-
-        fig = plt.figure(figsize=(3, 3), dpi=300)
-        ax = fig.add_subplot(1, 1, 1)
-        plt.plot(self[0], self[1], 'ro', markersize=2, label='user point/highest point')
-
-
-        plt.title('Flood Emergency Planning Map', fontsize=8)
-        ax.imshow(background_image, origin="upper", extent=extent, zorder=0)
-        ax.imshow(user_image, origin="upper", extent=u_extent, alpha=0.5, zorder=1)
-        plt.axis('off')
-        plt.legend(loc='best', fontsize=4, bbox_to_anchor=(0.5, 0, 0.5, 0.5))
-        plt.show()
-
-    def simple_path(self, user_x, user_y, background_file, user_file):
-        background = rasterio.open(str(background_file))
-        background_image = background.read(1)
-        user = rasterio.open(str(user_file))
-        user_image = user.read(1)
-        user_image[user_image == -1] = np.nan
-        bounds = background.bounds
-        extent = [bounds.left, bounds.right, bounds.bottom, bounds.top]
-        u_bound = user.bounds
-        u_extent = [u_bound.left, u_bound.right, u_bound.bottom, u_bound.top]
-
-        fig = plt.figure(figsize=(3, 3), dpi=300)
-        ax = fig.add_subplot(1, 1, 1)
-        plt.plot(self[0], self[1], 'ro', markersize=2, label='user point/highest point')
-        st_x = [user_x, self[0]]
-        st_y = [user_y, self[1]]
-        plt.plot(st_x, st_y, 'b--', linewidth=1.0, label='simple path')
-        plt.title('Flood Emergency Planning Map', fontsize=8)
-        ax.imshow(background_image, origin="upper", extent=extent, zorder=0)
-        ax.imshow(user_image, origin="upper", extent=u_extent, alpha=0.5, zorder=1)
-        plt.axis('off')
-        plt.legend(loc='best', fontsize=4, bbox_to_anchor=(0.5, 0, 0.5, 0.5))
-        plt.show()
 
 
 

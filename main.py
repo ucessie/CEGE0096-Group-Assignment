@@ -1,5 +1,5 @@
 from user_input import IO
-from high_point import Clip
+from highest_point import Clip
 from ITN import ITN
 from plotter import Plotter
 from Shortest_path import Network
@@ -7,14 +7,11 @@ from Shortest_path import Network
 print("Enter the user location (as Easting and Northing)")
 # indicate the initial file path
 back_ground_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\background\raster-50k_2724246.tif'
-background_region_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\background\bk_output.tif'
 elevation_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\elevation\SZ.asc'
-user_region_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\elevation\output.tif'
 itn_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\itn\solent_itn.json'
 # itn_file structure: TOID{[roadname];[links](start nodes ... end nodes)}
 nodes_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\roads\nodes.shp'
 links_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\roads\links.shp'
-island_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\shape\isle_of_wight.shp'
 
 print('Task 1 start here!!!!')
 # Input user point
@@ -22,17 +19,13 @@ x, y = IO.user_input()
 raster = IO.read_raster(back_ground_file)
 elevation = IO.read_raster(elevation_file)
 background = IO.read_raster(back_ground_file)
-buffer_region = IO.read_raster(user_region_file)
-background_region = IO.read_raster(background_region_file)
 all_height = elevation.read(1)
 # read shape
 road = ITN.read_json(itn_file)
 node = ITN.read_shape(nodes_file)
 links = ITN.read_shape(links_file)
 
-# Check if user is on the island
-#user_status = IO.point_in_polygon(x, y, island_file)
-user_elev = Clip.user_elevation(user_region_file, x, y)
+user_elev = Clip.user_elevation(elevation_file, x, y)
 print('User elevation: ', user_elev)
 
 print('------------------------------------------------------------\n')
@@ -47,9 +40,6 @@ bk_region = Clip.geo(bk)
 # access coordinate
 coord = Clip.getFeatures(region)
 bk_coord = Clip.getFeatures(bk_region)
-# Check to see whether the area is correct
-poly_area = bk_region['geometry'].area
-print(poly_area)
 
 # Create mask region using the buffer
 # image is a numpy array
@@ -63,6 +53,8 @@ bk_meta = Clip.meta_update(background, bk_image, bk_region, bk_trans)
 # execute clip method and return tif file
 Clip.clip_ras(image, user_meta)
 Clip.clip_square(bk_image, bk_meta)
+background_region_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\background\bk_output.tif'
+user_region_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\elevation\output.tif'
 
 # return highest point as tuple
 hp_region, height_max = Clip.search_highest_point(user_region_file)
@@ -85,10 +77,6 @@ else:
     print('highest_point: ', hp_region)
     print(start_node)
     print(end_node)
-
-    if start_node == end_node:
-        print('Just walk!')
-        test = Plotter.simple_path()
 
     print('-------------------------------------------------------------\n')
     print('Task 4 start here!!!')

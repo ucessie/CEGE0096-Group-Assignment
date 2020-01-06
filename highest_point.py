@@ -9,9 +9,6 @@ from pyproj import CRS
 
 class Clip:
 
-    def __init__(self):
-        pass
-
     def buffer(x, y):
         # Store as point object
         # in km
