@@ -6,6 +6,7 @@ import numpy as np
 import json
 from pyproj import CRS
 
+
 class Clip:
 
     def buffer(x, y):
@@ -70,4 +71,11 @@ class Clip:
 
         # return a list of highest point coord, but we only take the first one
         set = [raster.xy(row, col) for item, row, col in rc]
-        return set[0]
+        return set[0], max
+
+    def user_elevation(image, x, y):
+        raster = rasterio.open(image, 'r')
+        height_array = raster.read(1)
+        row, col = raster.index(x, y)
+        user_elev = height_array[row, col]
+        return user_elev

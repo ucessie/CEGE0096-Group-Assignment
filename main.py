@@ -30,6 +30,11 @@ road = ITN.read_json(itn_file)
 node = ITN.read_shape(nodes_file)
 links = ITN.read_shape(links_file)
 
+# Check if user is on the island
+#user_status = IO.point_in_polygon(x, y, island_file)
+user_elev = Clip.user_elevation(user_region_file, x, y)
+print('User elevation: ', user_elev)
+
 print('------------------------------------------------------------\n')
 print('Task 2 start here !!!!')
 # Takes buffer region
@@ -60,12 +65,15 @@ Clip.clip_ras(image, user_meta)
 Clip.clip_square(bk_image, bk_meta)
 
 # return highest point as tuple
-hp_region = Clip.search_highest_point(user_region_file)
+hp_region, height_max = Clip.search_highest_point(user_region_file)
+print('Highest point elevation: ', height_max)
 if hp_region == (x, y):
     print('You are very safe!!')
-    test = Plotter.simple_point(hp_region, background_region_file, user_region_file)
+    test = Plotter.test(background_region_file, user_region_file, 0, 0,0, 0, 0, 0, x, y, hp_region, 'simple_point')
+elif height_max == user_elev:
+    print('You are very safe!!!!')
+    test = Plotter.test(background_region_file, user_region_file, 0, 0,0, 0, 0, 0, x, y, hp_region, 'simple_point')
 else:
-
     # access variables from buffer region file
     print('----------------------------------------------------------\n')
     print('Task 3 start here!!')
@@ -78,8 +86,12 @@ else:
     print(start_node)
     print(end_node)
 
+    if start_node == end_node:
+        print('Just walk!')
+        test = Plotter.simple_path()
+
     print('-------------------------------------------------------------\n')
-    print('Task 4 stat here!!!')
+    print('Task 4 start here!!!')
     # Find shortest path
     shortest_distance_path, G = Network.find_distance_shortest_path(road, start_node, end_node)
     print('Shortest path (by distance weight): ', shortest_distance_path)
@@ -88,11 +100,11 @@ else:
     print('Shortest path (by speed/time): ', shortest_nais_path)
 
     print('-------------------------------------------------------------\n')
-    print('Task 5 stat here!!!')
+    print('Task 5 start here!!!')
 
 
     # Plot Diagram
     plot_simple = Plotter.draw_graph(G, shortest_distance_path, road)
     plot_nais = Plotter.draw_graph(G2,shortest_nais_path, road)
-    test = Plotter.test(background_region_file, user_region_file, plot_simple, plot_nais,start_x, start_y, end_x, end_y, x, y, hp_region)
+    test = Plotter.test(background_region_file, user_region_file, plot_simple, plot_nais,start_x, start_y, end_x, end_y, x, y, hp_region, 'shortest_path')
 
