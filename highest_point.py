@@ -9,6 +9,9 @@ from pyproj import CRS
 
 class Clip:
 
+    def __init__(self):
+        pass
+
     def buffer(x, y):
         # Store as point object
         # in km
@@ -42,7 +45,6 @@ class Clip:
         # self represent the original file meta data
         meta_data = self.meta.copy()
         epsg_code = int(buffer_region.crs['init'][5:])
-
         meta_data.update(
             {"driver": "GTiff", "height": buffer_image.shape[1], "width": buffer_image.shape[2], "transform": affine,
              "crs": CRS.from_epsg(epsg_code).to_proj4()})
