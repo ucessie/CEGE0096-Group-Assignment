@@ -43,11 +43,10 @@ class IO:
                     result = []
                     for poly in geom:
                         result.append(poly.contains(point))
-                    if result == False:
-                        print('You are in the sea!!')
+                    if not any(result):
+                        print('you are in the sea')
                     else:
-                        return x, y
-
+                        return x,y
                 else:
                     print("Out of Range!")
                     return user_input()
