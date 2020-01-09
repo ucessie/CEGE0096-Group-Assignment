@@ -38,7 +38,8 @@ class Network:
                 st_row, st_col = elevation.index(start_p.x, start_p.y)
                 en_row, en_col = elevation.index(end_p.x, end_p.y)
                 diff_elevation = height[int(en_row), int(en_col)] - height[int(st_row), int(st_col)]
-                ele_time = abs(float(diff_elevation / 10)) + ele_time
+                if diff_elevation > 0:
+                    ele_time = float(diff_elevation / 10) + ele_time
                 start_p = end_p
             # add total length speed and elevation time together
             time = ele_time + roadlinks[link]['length'] / speed

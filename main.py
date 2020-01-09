@@ -50,7 +50,7 @@ bk_image, bk_trans = Clip.mask_ras(background, bk_region)
 user_meta = Clip.meta_update(elevation, image, region, trans)
 bk_meta = Clip.meta_update(background, bk_image, bk_region, bk_trans)
 
-# execute clip method and return tif file
+# execute clip method, return tif file and assign new output file here
 Clip.clip_ras(image, user_meta)
 Clip.clip_square(bk_image, bk_meta)
 background_region_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\background\bk_output.tif'
@@ -94,5 +94,5 @@ else:
     # Plot Diagram
     plot_simple = Plotter.draw_graph(G, shortest_distance_path, road)
     plot_nais = Plotter.draw_graph(G2,shortest_nais_path, road)
-    test = Plotter.test(background_region_file, user_region_file, plot_simple, plot_nais,start_x, start_y, end_x, end_y, x, y, hp_region, 'shortest_path')
+    test = Plotter.test(background_region_file, back_ground_file, user_region_file, plot_simple, plot_nais,start_x, start_y, end_x, end_y, x, y, hp_region, 'shortest_path')
 

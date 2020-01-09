@@ -2,25 +2,7 @@ import rasterio
 import numpy as np
 from shapely.geometry import shape
 import fiona
-import matplotlib.pyplot as plt
 import shapely
-
-
-class Point:
-    def __init__(self, id, x, y):
-        self.id = id
-        self.x = x
-        self.y = y
-
-    def get_name(self):
-        return self.id
-
-    def get_x(self):
-        return self.x
-
-    def get_y(self):
-        return self.y
-
 
 class IO:
 

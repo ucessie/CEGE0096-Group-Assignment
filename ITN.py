@@ -1,9 +1,8 @@
 from rtree import index
 import geopandas as gpd
 import json
-from user_input import Point
 import rasterio
-
+from shapely.geometry import Point
 
 class ITN:
 
@@ -37,16 +36,16 @@ class ITN:
         for node in roadnodes:
             x = roadnodes[node]['coords'][0]
             y = roadnodes[node]['coords'][1]
-            coord_lst.append(Point(i, x, y))
+            coord_lst.append(Point(x, y))
             i += 1
 
         for pt in coord_lst:
-            idx.insert(id, (pt.get_x(), pt.get_y(), pt.get_x(), pt.get_y()))
+            idx.insert(id, (pt.x, pt.y, pt.x, pt.y))
             id += 1
 
         # return the id of the point
-        start_index = list(idx.nearest((user_x, user_y), 1))[0]
-        end_index = list(idx.nearest((highest_point[0], highest_point[1]), 1))[0]
+        start_index = list(idx.nearest((user_x, user_y, user_x, user_y), 1))[0]
+        end_index = list(idx.nearest((highest_point[0], highest_point[1], highest_point[0], highest_point[1]), 1))[0]
 
         # return the coordinate of the nearest point
         start_corr = coord_lst[start_index]
@@ -56,4 +55,4 @@ class ITN:
         start_node = ids[start_index]
         end_node = ids[end_index]
 
-        return start_node, end_node, start_corr.get_x(), start_corr.get_y(), end_corr.get_x(), end_corr.get_y()
+        return start_node, end_node, start_corr.x, start_corr.y, end_corr.x, end_corr.y

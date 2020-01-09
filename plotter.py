@@ -36,9 +36,12 @@ class Plotter:
         shortest_path_gpd = gpd.GeoDataFrame({"fid": links, "geometry": geom})
         return shortest_path_gpd
 
-    def test(self, user_region, shortest_distance_path_gpd, shortest_nais_path_gpd, start_x, start_y, end_x, end_y, user_x, user_y, hp, handler):
+    def test(self, back_ground, user_region, shortest_distance_path_gpd, shortest_nais_path_gpd, start_x, start_y, end_x, end_y, user_x, user_y, hp, handler):
         background = rasterio.open(str(self))
+        back_pa = rasterio.open(str(back_ground))
         background_image = background.read(1)
+        palette = np.array([value for key, value in back_pa.colormap(1).items()])
+        background_image = palette[background_image]
         user = rasterio.open(str(user_region))
         user_image = user.read(1)
         user_image[user_image == -1] = np.nan
@@ -75,7 +78,7 @@ class Plotter:
             plt.plot(st_x, st_y, 'b--', linewidth=1.0, label='simple path')
 
         ax.imshow(background_image, origin="upper", extent=extent, zorder=0)
-        ax.imshow(user_image, origin="upper", extent=u_extent, alpha=0.6, zorder=1, vmin=0)
+        ax.imshow(user_image, origin="upper", extent=u_extent, alpha=0.6, zorder=1, vmin=0, cmap='terrain')
         plt.title('Flood Emergency Planning Map', fontsize=8)
         plt.axis('off')
         plt.legend(loc='best', fontsize=4, bbox_to_anchor=(0.7, 0, 0.5, 0.5))
