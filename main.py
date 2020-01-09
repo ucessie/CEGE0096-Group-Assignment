@@ -59,18 +59,17 @@ user_region_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group As
 # return highest point as tuple
 hp_region, height_max = Clip.search_highest_point(user_region_file)
 print('Highest point elevation: ', height_max)
-if hp_region == (x, y):
+
+# case where user point is highest point
+if hp_region == (x, y) or height_max == user_elev:
     print('You are very safe!!')
-    test = Plotter.test(background_region_file, user_region_file, 0, 0,0, 0, 0, 0, x, y, hp_region, 'simple_point')
-elif height_max == user_elev:
-    print('You are very safe!!!!')
-    test = Plotter.test(background_region_file, user_region_file, 0, 0,0, 0, 0, 0, x, y, hp_region, 'simple_point')
+    test = Plotter.test(background_region_file, back_ground_file, user_region_file, 0, 0, 0, 0, 0, 0, x, y, hp_region, 'simple_point')
 else:
     # access variables from buffer region file
     print('----------------------------------------------------------\n')
     print('Task 3 start here!!')
 
-    start_node, end_node, start_x, start_y, end_x, end_y = ITN.load_tree(road, x, y, hp_region)
+    start_node, end_node, start_x, start_y, end_x, end_y = ITN.load_tree(road, user_region, x, y, hp_region)
     print('start point: ', (start_x, start_y))
     print('user point: ', (x, y))
     print('end point: ', (end_x, end_y))
@@ -94,5 +93,5 @@ else:
     # Plot Diagram
     plot_simple = Plotter.draw_graph(G, shortest_distance_path, road)
     plot_nais = Plotter.draw_graph(G2,shortest_nais_path, road)
-    test = Plotter.test(background_region_file, back_ground_file, user_region_file, plot_simple, plot_nais,start_x, start_y, end_x, end_y, x, y, hp_region, 'shortest_path')
+    test = Plotter.test(background_region_file, back_ground_file, user_region_file, plot_simple, plot_nais, start_x, start_y, end_x, end_y, x, y, hp_region, 'shortest_path')
 

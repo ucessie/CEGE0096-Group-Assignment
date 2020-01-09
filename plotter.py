@@ -78,10 +78,13 @@ class Plotter:
             plt.plot(st_x, st_y, 'b--', linewidth=1.0, label='simple path')
 
         ax.imshow(background_image, origin="upper", extent=extent, zorder=0)
-        ax.imshow(user_image, origin="upper", extent=u_extent, alpha=0.6, zorder=1, vmin=0, cmap='terrain')
+        img = ax.imshow(user_image, origin="upper", extent=u_extent, alpha=0.6, zorder=1, vmin=0, cmap='terrain')
         plt.title('Flood Emergency Planning Map', fontsize=8)
+        plt.legend(loc='best', fontsize=4, bbox_to_anchor=(0.5, -0.02), ncol=2)
         plt.axis('off')
-        plt.legend(loc='best', fontsize=4, bbox_to_anchor=(0.7, 0, 0.5, 0.5))
+        cx = fig.add_axes([1, 0.2, 0.03, 0.6])
+        cb = plt.colorbar(img, cax=cx)
+        cb.ax.tick_params(labelsize=3)
         plt.show()
 
 
