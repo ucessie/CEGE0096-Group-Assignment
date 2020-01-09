@@ -18,7 +18,7 @@ class IO:
                 y = float(input("y coordinate(between 80000, 95000): "))
                 if x_min <= x <= x_max and y_min <= y <= y_max:
                     # Check if user is on the island
-                    island = r'Material\shape\isle_of_wight.shp'
+                    island = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\shape\isle_of_wight.shp'
                     shp = fiona.open(island)
                     point = shapely.geometry.Point(x, y)
                     pol = shp.next()
@@ -35,8 +35,8 @@ class IO:
                     return IO.user_input()
 
             except ValueError:
-                print("Wrong data tpye!")
-                return user_input()
+                print("Wrong data type!")
+                return IO.user_input()
 
 
     def read_raster(self):

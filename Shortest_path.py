@@ -1,6 +1,7 @@
 import networkx as nx
 from shapely.geometry import Point
 
+
 class Network:
 
     def find_distance_shortest_path(self, start_node, end_node):
@@ -50,6 +51,4 @@ class Network:
                         weight=time)
 
         nais_path = nx.dijkstra_path(G2, source=start_node, target=end_node, weight="weight")
-
-
         return nais_path, G2

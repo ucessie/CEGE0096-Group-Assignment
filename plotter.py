@@ -1,17 +1,11 @@
-import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
-from rasterio.plot import show
-import networkx as nx
 from shapely.geometry import LineString
 import geopandas as gpd
 import numpy as np
 import rasterio
-#import cartopy.crs as ccrs
-
 
 
 class Plotter:
-
 
     def draw_graph(graph, shortest_path, json_file):
         G = graph

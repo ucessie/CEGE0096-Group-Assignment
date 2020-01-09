@@ -4,17 +4,16 @@ from ITN import ITN
 from plotter import Plotter
 from Shortest_path import Network
 
-
-print("Enter the user location (as Easting and Northing)")
 # indicate the initial file path
-back_ground_file = r'Material\background\raster-50k_2724246.tif'
-elevation_file = r'Material\elevation\SZ.asc'
-itn_file = r'Material\itn\solent_itn.json'
+back_ground_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\background\raster-50k_2724246.tif'
+elevation_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\elevation\SZ.asc'
+itn_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\itn\solent_itn.json'
 # itn_file structure: TOID{[roadname];[links](start nodes ... end nodes)}
-nodes_file = r'Material\roads\nodes.shp'
-links_file = r'Material\roads\links.shp'
+nodes_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\roads\nodes.shp'
+links_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\roads\links.shp'
 
 print('Task 1 start here!!!!')
+print("Enter the user location (as Easting and Northing):")
 # Input user point
 x, y = IO.user_input()
 raster = IO.read_raster(back_ground_file)
@@ -54,8 +53,8 @@ bk_meta = Clip.meta_update(background, bk_image, bk_region, bk_trans)
 # execute clip method, return tif file and assign new output file here
 Clip.clip_ras(image, user_meta)
 Clip.clip_square(bk_image, bk_meta)
-background_region_file = r'Material\background\bk_output.tif'
-user_region_file = r'Material\elevation\output.tif'
+background_region_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\background\bk_output.tif'
+user_region_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\elevation\output.tif'
 
 # return highest point as tuple
 hp_region, height_max = Clip.search_highest_point(user_region_file)
@@ -75,8 +74,8 @@ else:
     print('user point: ', (x, y))
     print('end point: ', (end_x, end_y))
     print('highest_point: ', hp_region)
-    print(start_node)
-    print(end_node)
+    print('start node(FID): ', start_node)
+    print('end node(FID):', end_node)
 
     print('-------------------------------------------------------------\n')
     print('Task 4 start here!!!')

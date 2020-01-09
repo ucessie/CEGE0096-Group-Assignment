@@ -6,6 +6,7 @@ import numpy as np
 import json
 from pyproj import CRS
 
+
 class Clip:
 
     def buffer(x, y):
@@ -47,12 +48,12 @@ class Clip:
         return meta_data
 
     def clip_ras(image, meta_data):
-        output = r'Material\elevation\output.tif'
+        output = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\elevation\output.tif'
         with rasterio.open(output, 'w', **meta_data) as dest:
             dest.write(image)
 
     def clip_square(self, meta_data):
-        output = r'Material\background\bk_output.tif'
+        output = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\background\bk_output.tif'
         with rasterio.open(output, 'w', **meta_data) as dest:
             dest.write(self)
 

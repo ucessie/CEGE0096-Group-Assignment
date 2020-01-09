@@ -2,7 +2,8 @@ from rtree import index
 import geopandas as gpd
 import json
 import rasterio
-from shapely.geometry import Point, Polygon
+from shapely.geometry import Point
+
 
 class ITN:
 
@@ -32,8 +33,7 @@ class ITN:
         idx = index.Index()
         for i, (fid, coords) in enumerate(roadnodes.items()):
             x, y = coords['coords']
-            point = Point(x,y)
-            print(i, fid, (x, y), '\n')
+            point = Point(x, y)
             if buffer_region.contains(point):
                 idx.insert(i, [x, y, x, y], fid)
 
