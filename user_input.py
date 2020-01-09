@@ -18,7 +18,7 @@ class IO:
                 y = float(input("y coordinate(between 80000, 95000): "))
                 if x_min <= x <= x_max and y_min <= y <= y_max:
                     # Check if user is on the island
-                    island = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\shape\isle_of_wight.shp'
+                    island = r'Material\shape\isle_of_wight.shp'
                     shp = fiona.open(island)
                     point = shapely.geometry.Point(x, y)
                     pol = shp.next()
