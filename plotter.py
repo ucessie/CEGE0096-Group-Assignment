@@ -6,6 +6,7 @@ from shapely.geometry import LineString
 import geopandas as gpd
 import numpy as np
 import rasterio
+from matplotlib_scalebar.scalebar import ScaleBar
 #import cartopy.crs as ccrs
 
 
