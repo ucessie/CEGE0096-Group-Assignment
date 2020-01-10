@@ -27,9 +27,7 @@ class ITN:
         # GeoDataFrame of the shortest path
         # index for roadnodes with Rtree
         roadnodes = self['roadnodes']
-        ids = list(roadnodes)
         # create a list of point object
-        coord_lst = []
         idx = index.Index()
         for i, (fid, coords) in enumerate(roadnodes.items()):
             x, y = coords['coords']
