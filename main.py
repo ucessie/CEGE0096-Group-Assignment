@@ -11,6 +11,7 @@ import os
 file_os = test_os.get_my_path()
 # go 2 directory levels up
 material_path = reduce(lambda x, f: f(x), [os.path.dirname] * 2, file_os)
+# indicate the initial file path
 back_ground_file = str(os.path.join(material_path, 'Material', 'background', 'raster-50k_2724246.tif'))
 elevation_file = str(os.path.join(material_path, 'Material', 'elevation', 'SZ.asc'))
 itn_file = str(os.path.join(material_path, 'Material', 'itn', 'solent_itn.json'))
@@ -18,7 +19,6 @@ nodes_file = str(os.path.join(material_path, 'Material', 'roads', 'nodes.shp'))
 links_file = str(os.path.join(material_path, 'Material', 'roads', 'links.shp'))
 island_file = str(os.path.join(material_path, 'Material', 'shape', 'isle_of_wight.shp'))
 
-# indicate the initial file path
 print('Task 1 start here!!!!')
 print("Enter the user location (as Easting and Northing):")
 # Input user point
@@ -95,7 +95,6 @@ else:
 
     print('-------------------------------------------------------------\n')
     print('Task 5 start here!!!')
-
 
     # Plot Diagram
     plot_simple = Plotter.draw_graph(G, shortest_distance_path, road)

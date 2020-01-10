@@ -49,12 +49,12 @@ class Clip:
         return meta_data
 
     def clip_ras(image, meta_data, path):
-        path = str(os.path.join(path, 'Material', 'elevation') + r'\output.tif')
+        path = str(os.path.join(path, 'Material', 'elevation') + os.sep + r'output.tif')
         with rasterio.open(path, 'w', **meta_data) as dest:
             dest.write(image)
 
     def clip_square(self, meta_data, path):
-        path = str(os.path.join(path, 'Material', 'background') + r"\bk_output.tif")
+        path = str(os.path.join(path, 'Material', 'background') + os.sep + r"bk_output.tif")
         with rasterio.open(path, 'w', **meta_data) as dest:
             dest.write(self)
 

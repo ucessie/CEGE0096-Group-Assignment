@@ -31,11 +31,11 @@ class IO:
                         return x, y
                 else:
                     print("Out of Range!")
-                    return IO.user_input()
+                    return IO.user_input(island)
 
             except ValueError:
                 print("Wrong data type!")
-                return IO.user_input()
+                return IO.user_input(island)
 
 
     def read_raster(self):
