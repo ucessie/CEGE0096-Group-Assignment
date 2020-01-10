@@ -7,7 +7,7 @@ import rasterio
 
 class ITN:
 
-    def read_elevaton(self):
+    def read_elevation(self):
         raster = rasterio.open(self, 'r')
         height_array = raster.read()
         return height_array
