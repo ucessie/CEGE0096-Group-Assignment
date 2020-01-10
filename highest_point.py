@@ -5,6 +5,7 @@ from rasterio import mask
 import numpy as np
 import json
 from pyproj import CRS
+import os
 
 
 class Clip:
@@ -47,14 +48,14 @@ class Clip:
              "crs": CRS.from_epsg(epsg_code).to_proj4()})
         return meta_data
 
-    def clip_ras(image, meta_data):
-        output = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\elevation\output.tif'
-        with rasterio.open(output, 'w', **meta_data) as dest:
+    def clip_ras(image, meta_data, path):
+        path = str(os.path.join(path, 'Material', 'elevation') + r'\output.tif')
+        with rasterio.open(path, 'w', **meta_data) as dest:
             dest.write(image)
 
-    def clip_square(self, meta_data):
-        output = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\background\bk_output.tif'
-        with rasterio.open(output, 'w', **meta_data) as dest:
+    def clip_square(self, meta_data, path):
+        path = str(os.path.join(path, 'Material', 'background') + r"\bk_output.tif")
+        with rasterio.open(path, 'w', **meta_data) as dest:
             dest.write(self)
 
     def search_highest_point(image):

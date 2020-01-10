@@ -3,19 +3,26 @@ from highest_point import Clip
 from ITN import ITN
 from plotter import Plotter
 from Shortest_path import Network
+from functools import reduce
+import test_os
+import os
+
+# path to main.py
+file_os = test_os.get_my_path()
+# go 2 directory levels up
+material_path = reduce(lambda x, f: f(x), [os.path.dirname] * 2, file_os)
+back_ground_file = str(os.path.join(material_path, 'Material', 'background', 'raster-50k_2724246.tif'))
+elevation_file = str(os.path.join(material_path, 'Material', 'elevation', 'SZ.asc'))
+itn_file = str(os.path.join(material_path, 'Material', 'itn', 'solent_itn.json'))
+nodes_file = str(os.path.join(material_path, 'Material', 'roads', 'nodes.shp'))
+links_file = str(os.path.join(material_path, 'Material', 'roads', 'links.shp'))
+island_file = str(os.path.join(material_path, 'Material', 'shape', 'isle_of_wight.shp'))
 
 # indicate the initial file path
-back_ground_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\background\raster-50k_2724246.tif'
-elevation_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\elevation\SZ.asc'
-itn_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\itn\solent_itn.json'
-# itn_file structure: TOID{[roadname];[links](start nodes ... end nodes)}
-nodes_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\roads\nodes.shp'
-links_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\roads\links.shp'
-
 print('Task 1 start here!!!!')
 print("Enter the user location (as Easting and Northing):")
 # Input user point
-x, y = IO.user_input()
+x, y = IO.user_input(island_file)
 raster = IO.read_raster(back_ground_file)
 elevation = IO.read_raster(elevation_file)
 background = IO.read_raster(back_ground_file)
@@ -51,10 +58,10 @@ user_meta = Clip.meta_update(elevation, image, region, trans)
 bk_meta = Clip.meta_update(background, bk_image, bk_region, bk_trans)
 
 # execute clip method, return tif file and assign new output file here
-Clip.clip_ras(image, user_meta)
-Clip.clip_square(bk_image, bk_meta)
-background_region_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\background\bk_output.tif'
-user_region_file = r'C:\Users\Joseph\Desktop\UCL\Geospatial programming\Group Assignment\Material\elevation\output.tif'
+Clip.clip_ras(image, user_meta, material_path)
+Clip.clip_square(bk_image, bk_meta, material_path)
+background_region_file = str(os.path.join(material_path, 'Material', 'background', 'bk_output.tif'))
+user_region_file = str(os.path.join(material_path, 'Material', 'elevation', 'output.tif'))
 
 # return highest point as tuple
 hp_region, height_max = Clip.search_highest_point(user_region_file)
