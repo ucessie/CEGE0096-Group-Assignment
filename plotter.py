@@ -58,8 +58,8 @@ class Plotter:
             ed_y = [end_y, hp[1]]
             plt.plot(st_x, st_y, 'b--', linewidth=1.0)
             plt.plot(ed_x, ed_y, 'g--', linewidth=1.0)
-            shortest_nais_path_gpd.plot(ax=ax, edgecolor="red", linewidth=1.0, zorder=2, label='nais_path')
             shortest_distance_path_gpd.plot(ax=ax, edgecolor="black", linewidth=1.0, zorder=2, label='simple_path')
+            shortest_nais_path_gpd.plot(ax=ax, edgecolor="red", linewidth=1.0, zorder=2, label='nais_path')
 
         elif handler == 'simple_point':
             plt.plot(user_x, user_y, 'ro', markersize=2, label='user point/highest point')
@@ -69,7 +69,7 @@ class Plotter:
             plt.plot(hp[0], hp[1], 'go', markersize=2, label='highest point')
             st_x = [user_x, hp[0]]
             st_y = [user_y, hp[1]]
-            plt.plot(st_x, st_y, 'b--', linewidth=1.0, label='simple path')
+            plt.plot(st_x, st_y, 'r--', linewidth=1.0, label='simple path')
 
         ax.imshow(background_image, origin="upper", extent=extent, zorder=0)
         img = ax.imshow(user_image, origin="upper", extent=u_extent, alpha=0.6, zorder=1, vmin=0, cmap='terrain')

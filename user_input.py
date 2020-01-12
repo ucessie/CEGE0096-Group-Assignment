@@ -26,7 +26,7 @@ class IO:
                     for poly in geom:
                         result.append(poly.contains(point))
                     if not any(result):
-                        print('you are in the sea')
+                        print('You are in the sea or out of the island!')
                     else:
                         return x, y
                 else:

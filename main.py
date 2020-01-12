@@ -6,6 +6,7 @@ from Shortest_path import Network
 from functools import reduce
 import test_os
 import os
+from shapely.geometry import Point
 
 # path to main.py
 file_os = test_os.get_my_path()
@@ -83,21 +84,25 @@ else:
     print('highest_point: ', hp_region)
     print('start node(FID): ', start_node)
     print('end node(FID):', end_node)
+    if start_node == end_node:
+        print('You should walk directly to the highest point!!')
+        test = Plotter.test(background_region_file, back_ground_file, user_region_file, 0, 0, 0, 0, 0, 0, x, y, hp_region, 'simple_path')
+    else:
 
-    print('-------------------------------------------------------------\n')
-    print('Task 4 start here!!!')
-    # Find shortest path
-    shortest_distance_path, G = Network.find_distance_shortest_path(road, start_node, end_node)
-    print('Shortest path (by distance weight): ', shortest_distance_path)
+        print('-------------------------------------------------------------\n')
+        print('Task 4 start here!!!')
+        # Find shortest path
+        shortest_distance_path, G = Network.find_distance_shortest_path(road, start_node, end_node)
+        print('Shortest path (by distance weight): ', shortest_distance_path)
 
-    shortest_nais_path, G2 = Network.find_nais_rule_path(road, elevation, all_height, start_node, end_node)
-    print('Shortest path (by speed/time): ', shortest_nais_path)
+        shortest_nais_path, G2 = Network.find_nais_rule_path(road, elevation, all_height, start_node, end_node)
+        print('Shortest path (by speed/time): ', shortest_nais_path)
 
-    print('-------------------------------------------------------------\n')
-    print('Task 5 start here!!!')
+        print('-------------------------------------------------------------\n')
+        print('Task 5 start here!!!')
 
-    # Plot Diagram
-    plot_simple = Plotter.draw_graph(G, shortest_distance_path, road)
-    plot_nais = Plotter.draw_graph(G2,shortest_nais_path, road)
-    test = Plotter.test(background_region_file, back_ground_file, user_region_file, plot_simple, plot_nais, start_x, start_y, end_x, end_y, x, y, hp_region, 'shortest_path')
+        # Plot Diagram
+        plot_simple = Plotter.draw_graph(G, shortest_distance_path, road)
+        plot_nais = Plotter.draw_graph(G2,shortest_nais_path, road)
+        test = Plotter.test(background_region_file, back_ground_file, user_region_file, plot_simple, plot_nais, start_x, start_y, end_x, end_y, x, y, hp_region, 'shortest_path')
 
