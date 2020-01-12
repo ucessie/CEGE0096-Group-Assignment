@@ -24,7 +24,7 @@ class Network:
         # identify shortest path based on Naismith’s rule
         # 5km/hr and that an additional minute is added for every 10 meters of climb
         # G2 for naismith rule
-        G2 = nx.Graph()
+        G2 = nx.DiGraph()
         speed = float(5000 / 60)  # meter/min
         roadlinks = self['roadlinks']
 
@@ -33,9 +33,11 @@ class Network:
         for link in roadlinks:
             ele_time = 0
             fc = roadlinks[link]['coords']
+
+            # forward
             start_p = Point(tuple(roadlinks[link]['coords'][0]))
             for point in fc:
-                end_p = Point(tuple(point))  # last element
+                end_p = Point(tuple(point))
                 st_row, st_col = elevation.index(start_p.x, start_p.y)
                 en_row, en_col = elevation.index(end_p.x, end_p.y)
                 diff_elevation = height[int(en_row), int(en_col)] - height[int(st_row), int(st_col)]
@@ -49,6 +51,23 @@ class Network:
                         roadlinks[link]['end'],
                         fid=link,
                         weight=time)
+
+            # backward
+            r_start_p = Point(tuple(roadlinks[link]['coords'][-1]))
+            for point in reversed(fc):
+                end_p = Point(tuple(point))
+                st_row, st_col = elevation.index(r_start_p.x, r_start_p.y)
+                en_row, en_col = elevation.index(end_p.x, end_p.y)
+                diff_elevation = height[int(en_row), int(en_col)] - height[int(st_row), int(st_col)]
+                if diff_elevation > 0:
+                    ele_time = float(diff_elevation / 10) + ele_time
+                r_start_p = end_p
+            time = ele_time + roadlinks[link]['length'] / speed
+            G2.add_edge(roadlinks[link]['end'],
+                        roadlinks[link]['start'],
+                        fid=link,
+                        weight=time)
+
 
         nais_path = nx.dijkstra_path(G2, source=start_node, target=end_node, weight="weight")
         return nais_path, G2
