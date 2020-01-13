@@ -1,12 +1,11 @@
 from user_input import IO
 from highest_point import Clip
-from ITN import ITN
+from itn import ITN
 from plotter import Plotter
-from Shortest_path import Network
+from shortest_path import Network
 from functools import reduce
 import test_os
 import os
-from shapely.geometry import Point
 
 # path to main.py
 file_os = test_os.get_my_path()
